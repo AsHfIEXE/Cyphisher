@@ -149,7 +149,11 @@ Cyphisher has been successfully tested on:
 </details>
 
 ##
-
+<p align="center">
+  <a href="https://star-history.com/#AsHfIEXE/Cyphisher&Date">
+    <img src="https://api.star-history.com/svg?repos=AsHfIEXE/Cyphisher&type=Date&theme=dark" alt="Star History Chart" width="600">
+  </a>
+</p>
 ### 📞 Connect & Contribute
 <p align="left">
   <a href="https://github.com/AsHfIEXE" target="_blank"><img src="https://img.shields.io/badge/GitHub-Profile-blue?style=for-the-badge&logo=github"></a>
