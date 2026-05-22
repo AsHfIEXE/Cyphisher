@@ -1,0 +1,44 @@
+name: Build and Deploy Termux Repository
+
+on:
+  push:
+    branches:
+      - master
+      - main
+  release:
+    types: [published]
+
+permissions:
+  contents: write
+
+jobs:
+  build_termux_repo:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Install dependencies
+        run: sudo apt-get update && sudo apt-get install -y dpkg-dev
+
+      - name: Build Debian Package
+        run: |
+          chmod +x make-deb.sh
+          bash make-deb.sh termux
+          
+          mkdir -p repo
+          mv *.deb repo/
+
+      - name: Generate APT Repository metadata
+        run: |
+          cd repo
+          dpkg-scanpackages . /dev/null | gzip -9c > Packages.gz
+          echo "deb [trusted=yes] https://ashfiexe.github.io/Cyphisher/ ./" > cyphisher.list
+
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./repo
+          publish_branch: gh-pages
+          force_orphan: true

