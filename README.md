@@ -1,8 +1,5 @@
 <!-- Cyphisher README -->
 
-<p align="center">
-  <img src="screenshots/menu.png" alt="Cyphisher Main Menu">
-</p>
 
 <p align="center">
   <img src="https://img.shields.io/badge/Release-v0.2.1-success?style=for-the-badge&logo=appveyor">
@@ -24,6 +21,9 @@
 ##
 
 ### 🖼️ Intuitive UI & Deep Customization
+<p align="center">
+  <img src="screenshots/menu.png" alt="Cyphisher Main Menu">
+</p>
 
 <p align="center">
   <img src="screenshots/submenu.png" alt="Cyphisher Templates">
